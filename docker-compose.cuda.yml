@@ -2,9 +2,14 @@ services:
   libretranslate:
     container_name: libretranslate
     image: libretranslate/libretranslate:latest-cuda
-    ports:
-      - "5000:5000"
+    # ports:
+    #   - "5000:5000"
+    network_mode: service:vpn
+    depends_on:
+      - vpn
     restart: unless-stopped
+    profiles:
+      - arr
     command: --disable-web-ui
     environment:
      - LT_API_KEYS_DB_PATH=/app/db/api_keys.db
